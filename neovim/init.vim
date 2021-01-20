@@ -39,6 +39,9 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set laststatus=2
 set autochdir
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+colorscheme desert
+
 noremap <LEADER><CR> :nohlsearch<CR>
 
 map R :source $MYVIMRC<CR>
@@ -68,8 +71,8 @@ map sh <C-w>t<C-w>K
 
 map W :w<CR>
 
-call plug#begin('~/.config/nvim/plugged')
-
+" call plug#begin('~/AppData/Local/nvim/plugin')
+call plug#begin()
 Plug 'vim-airline/vim-airline'
 
 " File navigation
@@ -82,8 +85,17 @@ Plug 'kshenoy/vim-signature'
 " Undo Tree
 Plug 'mbbill/undotree/'
 
+" hightlight yank
 Plug 'cyansprite/vim-highlightedyank'
 
+" 界面设置
+Plug 'junegunn/limelight.vim'
+
+" 配合limelight使用
+Plug 'junegunn/goyo.vim'
+
+" rgb
+Plug 'vim-scripts/colorsel.vim'
 
 " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
@@ -155,16 +167,36 @@ let ncm2#complete_length = [[1, 1]]
 let g:ncm2#matcher = 'substrfuzzy'
 "使用tab键向下选择弹框菜单
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
-"使用shift+tab键向上选择弹窗菜单,这里不设置因为笔记本比较难操作.如果向下太多我通常习惯使用Backspace键再重新操作一遍
-"inoremap <expr> <S> pumvisible() ? "\<C-p>" : "\<S>"
 
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+" Default: 0.5
+let g:limelight_default_coefficient = 0.5
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
 
+" Goyo配置
+let g:goyo_width = 106
+let g:goyo_height = 90
+let g:goyo_linenr = 0
 
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
-
-
-
-
+nmap <silent><LEADER>g :Goyo<CR>
+xmap <silent><LEADER>g :Goyo<CR>
 
 
 
