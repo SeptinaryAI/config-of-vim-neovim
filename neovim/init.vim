@@ -22,14 +22,15 @@ set updatetime=100
 set mouse=
 set encoding=utf-8
 let &t_ut=''
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set list
 set listchars=tab:▸\ ,trail:▫
 set scrolloff=5
 set tw=0
+set smartindent
+set expandtab
 set indentexpr=
 set backspace=indent,eol,start
 set foldmethod=indent
