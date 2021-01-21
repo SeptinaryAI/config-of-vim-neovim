@@ -6,7 +6,7 @@ set cursorline
 set wrap
 set showcmd
 set wildmenu
-
+set termguicolors
 set hlsearch
 exec "nohlsearch"
 set incsearch
@@ -107,7 +107,7 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
 " rgb
-Plug 'vim-scripts/colorsel.vim'
+Plug 'lilydjwg/colorizer'
 
 " " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 " Plug 'ncm2/ncm2'
@@ -256,6 +256,7 @@ let g:coc_global_extensions = [
   \ 'coc-explorer',
   \ 'coc-translator',
   \ 'coc-actions',
+  \ 'coc-highlight',
   \ 'coc-marketplace']
 
 " Use tab for trigger completion with characters ahead and navigate.
