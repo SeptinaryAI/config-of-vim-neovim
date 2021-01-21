@@ -44,6 +44,14 @@ colorscheme desert
 
 noremap <LEADER><CR> :nohlsearch<CR>
 
+"use + reg default
+noremap y "+y
+noremap yy "+yy
+noremap d "+d
+noremap dd "+dd
+noremap p "+p
+noremap P "+P
+
 map R :source $MYVIMRC<CR>
 map ; :
 
@@ -87,7 +95,6 @@ Plug 'mbbill/undotree/'
 
 " hightlight yank
 Plug 'cyansprite/vim-highlightedyank'
-
 " 界面设置
 Plug 'junegunn/limelight.vim'
 
@@ -110,9 +117,11 @@ set completeopt=noinsert,menuone,noselect
 " NOTE: you need to install completion sources to get completions. Check
 " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-pyclang'
-Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-path' "file dir 
+Plug 'ncm2/ncm2-pyclang' "c/c++
+Plug 'ncm2/ncm2-jedi' "py
+Plug 'ncm2/ncm2-tern' "js
+Plug 'ncm2/ncm2-cssomni' "css
 
 " just like  :w !sudo tee %
 Plug 'lambdalisue/suda.vim'
@@ -147,27 +156,23 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Dirty"     : "✗",
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
-    \ }
+\}
 
+" ncm2 pyclang c/c++
+" path to directory where libclang.so can be found
+let g:ncm2_pyclang#library_path = 'C:/ProgramData/Qt/Qt5.12.2/Tools/QtCreator/bin'
 
-" ==
-" == ncm2
-" ==
+" ncm2
 autocmd BufEnter * call ncm2#enable_for_buffer()
-" 补全模式,具体详情请看下文
 set completeopt=menu,noinsert
 set shortmess+=c
 inoremap <c-c> <ESC>
-" 延迟弹窗,这样提示更加流畅
 let ncm2#popup_delay = 5
-"输入几个字母开始提醒:[[最小优先级,最小长度]]
-"如果是输入的是[[1,3],[7,2]],那么优先级在1-6之间,会在输入3个字符弹出,如果大于等于7,则2个字符弹出----优先级概念请参考文档中 ncm2-priority 
 let ncm2#complete_length = [[1, 1]]
-"模糊匹配模式,详情请输入:help ncm2查看相关文档
 let g:ncm2#matcher = 'substrfuzzy'
-"使用tab键向下选择弹框菜单
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
 
+" limelight
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
@@ -187,7 +192,7 @@ let g:limelight_paragraph_span = 1
 "   Set it to -1 not to overrule hlsearch
 let g:limelight_priority = -1
 
-" Goyo配置
+" Goyo
 let g:goyo_width = 106
 let g:goyo_height = 90
 let g:goyo_linenr = 0
