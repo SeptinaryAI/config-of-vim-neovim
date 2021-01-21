@@ -18,6 +18,7 @@ filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
+set updatetime=100
 set mouse=
 set encoding=utf-8
 let &t_ut=''
@@ -79,6 +80,10 @@ map sh <C-w>t<C-w>K
 
 map W :w<CR>
 
+" Indentation
+nnoremap < <<
+nnoremap > >>
+
 " call plug#begin('~/AppData/Local/nvim/plugin')
 call plug#begin()
 Plug 'vim-airline/vim-airline'
@@ -91,10 +96,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'kshenoy/vim-signature'
 
 " Undo Tree
-Plug 'mbbill/undotree/'
+" Plug 'mbbill/undotree/'
 
-" hightlight yank
-Plug 'cyansprite/vim-highlightedyank'
+" hightlight yank, replace by coc-yank
+" Plug 'cyansprite/vim-highlightedyank'
 " 界面设置
 Plug 'junegunn/limelight.vim'
 
@@ -104,75 +109,110 @@ Plug 'junegunn/goyo.vim'
 " rgb
 Plug 'vim-scripts/colorsel.vim'
 
-" assuming you're using vim-plug: https://github.com/junegunn/vim-plug
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path' "file dir 
-Plug 'ncm2/ncm2-pyclang' "c/c++
-Plug 'ncm2/ncm2-jedi' "py
-Plug 'ncm2/ncm2-tern' "js
-Plug 'ncm2/ncm2-cssomni' "css
-
+" " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
+" 
+" 
+" " NOTE: you need to install completion sources to get completions. Check
+" " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path' "file dir 
+" Plug 'ncm2/ncm2-pyclang' "c/c++
+" Plug 'ncm2/ncm2-jedi' "py
+" Plug 'ncm2/ncm2-tern' "js
+" Plug 'ncm2/ncm2-cssomni' "css
+" Plug 'ncm2/ncm2-html-subscope' "html
 " just like  :w !sudo tee %
 Plug 'lambdalisue/suda.vim'
+
+" coc!
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " ===
 " === NERDTree
 " ===
-map tt :NERDTreeToggle<CR>
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = ""
-let NERDTreeMapUpdirKeepOpen = "l"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = "n"
-let NERDTreeMapChangeRoot = "y"
+" map tt :NERDTreeToggle<CR>
+" let NERDTreeMapOpenExpl = ""
+" let NERDTreeMapUpdir = ""
+" let NERDTreeMapUpdirKeepOpen = "l"
+" let NERDTreeMapOpenSplit = ""
+" let NERDTreeOpenVSplit = ""
+" let NERDTreeMapActivateNode = "i"
+" let NERDTreeMapOpenInTab = "o"
+" let NERDTreeMapPreview = ""
+" let NERDTreeMapCloseDir = "n"
+" let NERDTreeMapChangeRoot = "y"
 
 
 " ==
 " == NERDTree-git
 " ==
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-\}
+" let g:NERDTreeIndicatorMapCustom = {
+"     \ "Modified"  : "✹",
+"     \ "Staged"    : "✚",
+"     \ "Untracked" : "✭",
+"     \ "Renamed"   : "➜",
+"     \ "Unmerged"  : "═",
+"     \ "Deleted"   : "✖",
+"     \ "Dirty"     : "✗",
+"     \ "Clean"     : "✔︎",
+"     \ "Unknown"   : "?"
+" \}
 
-" ncm2 pyclang c/c++
-" path to directory where libclang.so can be found
-let g:ncm2_pyclang#library_path = 'C:/ProgramData/Qt/Qt5.12.2/Tools/QtCreator/bin'
+" " ****ncm2
+" " enable ncm2 for all buffers
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+" 
+" " IMPORTANT: :help Ncm2PopupOpen for more information
+" set completeopt=noinsert,menuone,noselect
+" 
+" " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" " found' messages
+" set shortmess+=c
+" 
+" " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+" inoremap <c-c> <ESC>
+" 
+" " When the <Enter> key is pressed while the popup menu is visible, it only
+" " hides the menu. Use this mapping to close the menu and also start a new
+" " line.
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" 
+" " Use <TAB> to select the popup menu:
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" 
+" " wrap existing omnifunc
+" " Note that omnifunc does not run in background and may probably block the
+" " editor. If you don't want to be blocked by omnifunc too often, you could
+" " add 180ms delay before the omni wrapper:
+" "  'on_complete': ['ncm2#on_complete#delay', 180,
+" "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+" au User Ncm2Plugin call ncm2#register_source({
+"         \ 'name' : 'css',
+"         \ 'priority': 9,
+"         \ 'subscope_enable': 1,
+"         \ 'scope': ['css','scss'],
+"         \ 'mark': 'css',
+"         \ 'word_pattern': '[\w\-]+',
+"         \ 'complete_pattern': ':\s*',
+"         \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+"         \ })
+" " [priority, min_len]
+" let ncm2#complete_length = [[1, 1]]
+" 
+" " delay 
+" let ncm2#popup_delay = 5
+" 
+" " ncm2 pyclang c/c++
+" " path to directory where libclang.so can be found
+" let g:ncm2_pyclang#library_path = 'C:/ProgramData/Qt/Qt5.12.2/Tools/QtCreator/bin'
 
-" ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=menu,noinsert
-set shortmess+=c
-inoremap <c-c> <ESC>
-let ncm2#popup_delay = 5
-let ncm2#complete_length = [[1, 1]]
-let g:ncm2#matcher = 'substrfuzzy'
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>" 
 
-" limelight
+" ****limelight
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
@@ -203,6 +243,89 @@ autocmd! User GoyoLeave Limelight!
 nmap <silent><LEADER>g :Goyo<CR>
 xmap <silent><LEADER>g :Goyo<CR>
 
+" ****coc
+let g:coc_global_extensions = [
+  \ 'coc-json',
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \ 'coc-vimlsp',
+  \ 'coc-html',
+  \ 'coc-xml',
+  \ 'coc-css',
+  \ 'coc-yank',
+  \ 'coc-explorer',
+  \ 'coc-translator',
+  \ 'coc-actions',
+  \ 'coc-marketplace']
 
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <C-c> coc#refresh()
+else
+  inoremap <silent><expr> <C-c> coc#refresh()
+endif
 
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
+nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+nnoremap tt :CocCommand explorer<CR> 
+
+" coc-actions
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+
+" coc-translator
+" NOTE: do NOT use `nore` mappings
+" popup
+nmap <Leader>t <Plug>(coc-translator-p)
+vmap <Leader>t <Plug>(coc-translator-pv)
+" echo
+nmap <Leader>e <Plug>(coc-translator-e)
+vmap <Leader>e <Plug>(coc-translator-ev)
+" replace
+nmap <Leader>r <Plug>(coc-translator-r)
+vmap <Leader>r <Plug>(coc-translator-rv)
