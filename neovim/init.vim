@@ -29,7 +29,8 @@ set list
 set listchars=tab:▸\ ,trail:▫
 set scrolloff=5
 set tw=0
-set smartindent
+" set smartindent
+" set smarttab
 set expandtab
 set indentexpr=
 set backspace=indent,eol,start
@@ -45,6 +46,12 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 colorscheme desert
 
 noremap <LEADER><CR> :nohlsearch<CR>
+inoremap {<CR> {}<LEFT><CR><ESC><<O
+inoremap { {}<LEFT>
+inoremap ( ()<LEFT>
+inoremap [ []<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
 
 "use + reg default
 noremap y "+y
