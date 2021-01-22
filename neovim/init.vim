@@ -13,11 +13,11 @@ set incsearch
 set ignorecase
 set smartcase
 
-set nocompatible
-filetype on
-filetype indent on
-filetype plugin on
-filetype plugin indent on
+"set nocompatible
+"filetype on
+"filetype indent on
+"filetype plugin on
+"filetype plugin indent on
 set updatetime=100
 set mouse=
 set encoding=utf-8
@@ -43,15 +43,12 @@ set laststatus=2
 set autochdir
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+set termguicolors " enable true colors support
+hi NonText ctermfg=gray guifg=grey10
+
 colorscheme desert
 
 noremap <LEADER><CR> :nohlsearch<CR>
-inoremap {<CR> {}<LEFT><CR><ESC><<O
-inoremap { {}<LEFT>
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
 
 "use + reg default
 noremap y "+y
@@ -60,6 +57,10 @@ noremap d "+d
 noremap dd "+dd
 noremap p "+p
 noremap P "+P
+
+" Space to Tab
+nnoremap <LEADER>tt :%s/    /\t/g
+vnoremap <LEADER>tt :s/    /\t/g
 
 map R :source $MYVIMRC<CR>
 map ; :
@@ -74,10 +75,10 @@ map <LEADER>h <C-w>h
 map <LEADER>k <C-w>k
 map <LEADER>j <C-w>j
 
-map <LEADER><LEADER>j :res +5<CR>
-map <LEADER><LEADER>k :res -5<CR>
-map <LEADER><LEADER>h :vertical resize-5<CR>
-map <LEADER><LEADER>l :vertical resize+5<CR>
+map <M-j> :res +5<CR>
+map <M-k> :res -5<CR>
+map <M-h> :vertical resize-5<CR>
+map <M-l> :vertical resize+5<CR>
 
 map ta :tabe<CR>
 map th :-tabnext<CR>
@@ -86,11 +87,24 @@ map tl :+tabnext<CR>
 map sv <C-w>t<C-w>H
 map sh <C-w>t<C-w>K
 
-map W :w<CR>
+map W 5w
+map <C-s> :w<CR>
 
 " Indentation
 nnoremap < <<
 nnoremap > >>
+
+" ===
+" === Command Mode Cursor Movement
+" ===
+" cnoremap <M-u> <Home>
+" cnoremap <M-i> <End>
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+""cnoremap <C-u> <S-Left>
+""cnoremap <C-i> <S-Right>
 
 " call plug#begin('~/AppData/Local/nvim/plugin')
 call plug#begin()
@@ -106,121 +120,31 @@ Plug 'kshenoy/vim-signature'
 " Undo Tree
 " Plug 'mbbill/undotree/'
 
-" hightlight yank, replace by coc-yank
-" Plug 'cyansprite/vim-highlightedyank'
 " 界面设置
 Plug 'junegunn/limelight.vim'
 
 " 配合limelight使用
 Plug 'junegunn/goyo.vim'
 
-" rgb
-Plug 'lilydjwg/colorizer'
-
-" " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" 
-" 
-" " NOTE: you need to install completion sources to get completions. Check
-" " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path' "file dir 
-" Plug 'ncm2/ncm2-pyclang' "c/c++
-" Plug 'ncm2/ncm2-jedi' "py
-" Plug 'ncm2/ncm2-tern' "js
-" Plug 'ncm2/ncm2-cssomni' "css
-" Plug 'ncm2/ncm2-html-subscope' "html
 " just like  :w !sudo tee %
 Plug 'lambdalisue/suda.vim'
+
+" '' "" {} [] 
+Plug 'jiangmiao/auto-pairs'
+
+" rainbow '' "" {} [] 
+Plug 'frazrepo/vim-rainbow'
+
+" rgb
+Plug 'lilydjwg/colorizer'
 
 " coc!
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
-" ===
-" === NERDTree
-" ===
-" map tt :NERDTreeToggle<CR>
-" let NERDTreeMapOpenExpl = ""
-" let NERDTreeMapUpdir = ""
-" let NERDTreeMapUpdirKeepOpen = "l"
-" let NERDTreeMapOpenSplit = ""
-" let NERDTreeOpenVSplit = ""
-" let NERDTreeMapActivateNode = "i"
-" let NERDTreeMapOpenInTab = "o"
-" let NERDTreeMapPreview = ""
-" let NERDTreeMapCloseDir = "n"
-" let NERDTreeMapChangeRoot = "y"
 
-
-" ==
-" == NERDTree-git
-" ==
-" let g:NERDTreeIndicatorMapCustom = {
-"     \ "Modified"  : "✹",
-"     \ "Staged"    : "✚",
-"     \ "Untracked" : "✭",
-"     \ "Renamed"   : "➜",
-"     \ "Unmerged"  : "═",
-"     \ "Deleted"   : "✖",
-"     \ "Dirty"     : "✗",
-"     \ "Clean"     : "✔︎",
-"     \ "Unknown"   : "?"
-" \}
-
-" " ****ncm2
-" " enable ncm2 for all buffers
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" 
-" " IMPORTANT: :help Ncm2PopupOpen for more information
-" set completeopt=noinsert,menuone,noselect
-" 
-" " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" " found' messages
-" set shortmess+=c
-" 
-" " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-" inoremap <c-c> <ESC>
-" 
-" " When the <Enter> key is pressed while the popup menu is visible, it only
-" " hides the menu. Use this mapping to close the menu and also start a new
-" " line.
-" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" 
-" " Use <TAB> to select the popup menu:
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" 
-" " wrap existing omnifunc
-" " Note that omnifunc does not run in background and may probably block the
-" " editor. If you don't want to be blocked by omnifunc too often, you could
-" " add 180ms delay before the omni wrapper:
-" "  'on_complete': ['ncm2#on_complete#delay', 180,
-" "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-" au User Ncm2Plugin call ncm2#register_source({
-"         \ 'name' : 'css',
-"         \ 'priority': 9,
-"         \ 'subscope_enable': 1,
-"         \ 'scope': ['css','scss'],
-"         \ 'mark': 'css',
-"         \ 'word_pattern': '[\w\-]+',
-"         \ 'complete_pattern': ':\s*',
-"         \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-"         \ })
-" " [priority, min_len]
-" let ncm2#complete_length = [[1, 1]]
-" 
-" " delay 
-" let ncm2#popup_delay = 5
-" 
-" " ncm2 pyclang c/c++
-" " path to directory where libclang.so can be found
-" let g:ncm2_pyclang#library_path = 'C:/ProgramData/Qt/Qt5.12.2/Tools/QtCreator/bin'
-
-
-" ****limelight
+" limelight
 " Color name (:help cterm-colors) or ANSI code
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
@@ -251,7 +175,20 @@ autocmd! User GoyoLeave Limelight!
 nmap <silent><LEADER>g :Goyo<CR>
 xmap <silent><LEADER>g :Goyo<CR>
 
-" ****coc
+" vim-rainbow
+au FileType c,cpp,objc,objcpp call rainbow#load()
+let g:rainbow_active = 1
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+" coc
 let g:coc_global_extensions = [
   \ 'coc-json',
   \ 'coc-tsserver',
@@ -267,6 +204,18 @@ let g:coc_global_extensions = [
   \ 'coc-highlight',
   \ 'coc-marketplace']
 
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -276,11 +225,16 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " Use <c-space> to trigger completion.
 if has('nvim')
-  inoremap <silent><expr> <C-c> coc#refresh()
+  inoremap <silent><expr> <C-o> coc#refresh()
 else
-  inoremap <silent><expr> <C-c> coc#refresh()
+  inoremap <silent><expr> <C-o> coc#refresh()
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
