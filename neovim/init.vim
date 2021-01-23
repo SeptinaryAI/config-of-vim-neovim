@@ -46,11 +46,12 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set termguicolors " enable true colors support
 hi NonText ctermfg=gray guifg=grey10
 
-colorscheme desert
+colorscheme colorsbox-stnight
 
 noremap <LEADER><CR> :nohlsearch<CR>
 
-"use + reg default
+" use + reg default
+" need "sudo pacman -S xsel" before use clipboard
 noremap y "+y
 noremap yy "+yy
 noremap d "+d
@@ -120,10 +121,10 @@ Plug 'kshenoy/vim-signature'
 " Undo Tree
 " Plug 'mbbill/undotree/'
 
-" 界面设置
+" limelight
 Plug 'junegunn/limelight.vim'
 
-" 配合limelight使用
+" goyo usually work with limelight
 Plug 'junegunn/goyo.vim'
 
 " just like  :w !sudo tee %
@@ -137,6 +138,9 @@ Plug 'frazrepo/vim-rainbow'
 
 " rgb
 Plug 'lilydjwg/colorizer'
+
+" colorscheme
+Plug 'flazz/vim-colorschemes'
 
 " coc!
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -198,6 +202,7 @@ let g:coc_global_extensions = [
   \ 'coc-xml',
   \ 'coc-css',
   \ 'coc-yank',
+  \ 'coc-clangd',
   \ 'coc-explorer',
   \ 'coc-translator',
   \ 'coc-actions',
@@ -284,11 +289,11 @@ nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<C
 " coc-translator
 " NOTE: do NOT use `nore` mappings
 " popup
-nmap <Leader>t <Plug>(coc-translator-p)
-vmap <Leader>t <Plug>(coc-translator-pv)
+nmap <LEADER>t <Plug>(coc-translator-p)
+vmap <LEADER>t <Plug>(coc-translator-pv)
 " echo
-nmap <Leader>e <Plug>(coc-translator-e)
-vmap <Leader>e <Plug>(coc-translator-ev)
+nmap <LEADER>e <Plug>(coc-translator-e)
+vmap <LEADER>e <Plug>(coc-translator-ev)
 " replace
-nmap <Leader>r <Plug>(coc-translator-r)
-vmap <Leader>r <Plug>(coc-translator-rv)
+nmap <LEADER>r <Plug>(coc-translator-r)
+vmap <LEADER>r <Plug>(coc-translator-rv)
