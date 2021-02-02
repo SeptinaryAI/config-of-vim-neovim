@@ -46,8 +46,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set termguicolors " enable true colors support
 hi NonText ctermfg=gray guifg=grey10
 
-colorscheme colorsbox-stnight
-
 noremap <LEADER><CR> :nohlsearch<CR>
 
 " use + reg default
@@ -147,6 +145,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
+colorscheme colorsbox-stnight
 
 " limelight
 " Color name (:help cterm-colors) or ANSI code
